@@ -49,3 +49,18 @@ To run the project successfully:
 ## 🎓 Course Information
 
 **Course:** SOSC 314
+
+
+### **Week 2: Text-as-Data Methods**
+
+* Defined the research focus on sentiment analysis of online product reviews.
+* Selected the Amazon Fine Food Reviews dataset containing user-generated review text and metadata.
+* Framed the task as a **text-as-data problem**, treating each review as a document unit.
+* Applied text preprocessing and basic exploratory analysis to understand review characteristics and text structure.
+
+### **Week 3: Data Construction, Cleaning**
+
+* Cleaned the dataset by removing reviews with missing text and invalid entries.
+* Created additional features such as **review length** to capture effort and informational depth.
+* Applied **TextBlob** to perform sentiment analysis and generate sentiment-related variables.
+
