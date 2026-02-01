@@ -64,3 +64,9 @@ To run the project successfully:
 * Created additional features such as **review length** to capture effort and informational depth.
 * Applied **TextBlob** to perform sentiment analysis and generate sentiment-related variables.
 
+### **Week 4: Operationalization, Initial Models**
+
+* Text Preprocessing (stemming, lowercasing, stop words and etc.)
+* Trained Linear Regression and Random Forest Regressor to answer to the question related to review_length
+* Found out that negative reviews tend to have slightly higher helpfulness than positive reviews
+
