@@ -50,23 +50,80 @@ To run the project successfully:
 
 **Course:** SOSC 314
 
+# 📊 Weekly Progress Report — SOSC 314 Course Project
 
-### **Week 2: Text-as-Data Methods**
+**Project:** Understanding Review Helpfulness in Online Marketplaces
 
-* Defined the research focus on sentiment analysis of online product reviews.
-* Selected the Amazon Fine Food Reviews dataset containing user-generated review text and metadata.
-* Framed the task as a **text-as-data problem**, treating each review as a document unit.
-* Applied text preprocessing and basic exploratory analysis to understand review characteristics and text structure.
+---
 
-### **Week 3: Data Construction, Cleaning**
+## Week 2: Research Topic, Dataset Selection & Initial Exploration
 
-* Cleaned the dataset by removing reviews with missing text and invalid entries.
-* Created additional features such as **review length** to capture effort and informational depth.
-* Applied **TextBlob** to perform sentiment analysis and generate sentiment-related variables.
+This week focused on defining the research topic, selecting an appropriate dataset, and conducting initial exploratory analysis.
 
-### **Week 4: Operationalization, Initial Models**
+* Defined the research focus on **review helpfulness and credibility** in online marketplaces
+* Selected the **Amazon Fine Food Reviews** dataset from Kaggle (SNAP dataset)
+* Examined dataset structure, features, and missing values
+* Analyzed key variables related to helpfulness and ratings
 
-* Text Preprocessing (stemming, lowercasing, stop words and etc.)
-* Trained Linear Regression and Random Forest Regressor to answer to the question related to review_length
-* Found out that negative reviews tend to have slightly higher helpfulness than positive reviews
+Initial exploration showed that the dataset contains over **568,000 reviews**, with strong class imbalance in review scores. Most reviews are highly positive, with **5-star ratings dominating the distribution**, while lower ratings appear less frequently. Descriptive statistics revealed a strong positive bias in ratings (mean score = 4.18, median = 5), which is important to consider for later modeling and interpretation. 
+
+---
+
+## Week 3: Feature Construction & Sentiment Analysis
+
+The main objective of this week was to transform unstructured text into meaningful and interpretable features.
+
+* Inspected all columns for missing values and handled incomplete entries
+* Created a **helpfulness_ratio** feature using HelpfulnessNumerator and HelpfulnessDenominator
+* Addressed zero-denominator cases by assigning a ratio of 0 to preserve data
+* Added **review_length** to capture informational content
+* Filtered out reviews with fewer than 15 words to reduce noise
+
+Sentiment analysis was conducted using **TextBlob**, generating:
+
+* `sentiment_score` (continuous, −1 to 1)
+* `sentiment_label` (POSITIVE, NEGATIVE, NEUTRAL)
+
+This step enabled early incorporation of emotional tone into the analysis while maintaining a lightweight and interpretable pipeline. The sentiment distribution showed a heavy dominance of positive reviews, highlighting another form of imbalance in the dataset. 
+
+---
+
+## Week 4: Text Preprocessing & Modeling Review Helpfulness
+
+This week focused on preparing text data and modeling how review characteristics affect perceived helpfulness.
+
+* Converted all text to lowercase to ensure consistency
+* Removed punctuation, numbers, and non-alphabetic characters to reduce noise
+* Expanded the stopword list and applied **Porter stemming** to normalize vocabulary
+* Created a `clean_text` column for modeling
+
+To address the question *“Does review length increase perceived credibility and helpfulness?”*:
+
+* A correlation analysis showed a weak positive relationship (r = 0.123)
+* Linear Regression estimated a small but positive effect of review length
+* Random Forest Regressor captured non-linear patterns but still explained limited variance (R² ≈ 0.023)
+
+Feature importance analysis showed that **review length accounted for ~96.7% of predictive power**, while sentiment contributed a smaller share. This suggests that informational content matters more than emotional tone for helpfulness. 
+
+---
+
+## Week 5: Diagnostics, Robustness & Expressiveness Analysis
+
+The final week focused on diagnostics, robustness checks, and answering the third research question:
+**“Are emotionally expressive reviews or informational reviews more helpful to consumers?”**
+
+* Computed **subjectivity scores** using TextBlob to measure emotional expressiveness
+* Classified reviews as:
+  * **INFORMATIONAL** (subjectivity < 0.5)
+  * **EMOTIONAL** (subjectivity ≥ 0.5)
+* Compared average helpfulness ratios across expressiveness types
+
+Results showed that **informational reviews have higher average helpfulness ratios (0.424) than emotional reviews (0.399)**. A Welch’s two-sample t-test confirmed this difference is **statistically significant** (p ≪ 0.05).
+
+Robustness checks included:
+
+* Redefining helpfulness as a binary outcome
+* Varying subjectivity thresholds (0.4, 0.5, 0.6)
+
+Across all tests, the conclusion remained stable: **informational reviews are consistently perceived as more helpful than emotionally expressive ones**, supporting the robustness and validity of the findings. 
 
