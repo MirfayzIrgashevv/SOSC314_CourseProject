@@ -89,7 +89,7 @@ The dataset contains consumer reviews with varying lengths, emotional tones, and
 
 ---
 
-## Notebook: [`CourseProjectReviews.ipynb.ipynb`](code/CourseProjectReviews.ipynb.ipynb)
+## Notebook: [`CourseProjectReviews.ipynb.ipynb`](code/CourseProjectReviews.ipynb)
 
 ---
 
