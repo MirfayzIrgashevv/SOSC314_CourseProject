@@ -50,80 +50,143 @@ To run the project successfully:
 
 **Course:** SOSC 314
 
-# 📊 Weekly Progress Report — SOSC 314 Course Project
+---
 
-**Project:** Understanding Review Helpfulness in Online Marketplaces
+## End-to-End Pipeline
+
+**Pipeline logic:**
+
+Raw review dataset
+→ Data exploration & preprocessing
+→ Text feature construction (length, sentiment, subjectivity)
+→ Helpfulness ratio computation
+→ Statistical testing (z-tests)
+→ Regression analysis
+→ Visualization & interpretation
 
 ---
 
-## Week 2: Research Topic, Dataset Selection & Initial Exploration
+## Review Helpfulness Overview
 
-This week focused on defining the research topic, selecting an appropriate dataset, and conducting initial exploratory analysis.
+The dataset contains consumer reviews with varying lengths, emotional tones, and sentiment polarities. Helpfulness is measured using a **helpfulness ratio**, capturing how useful a review is perceived by other users.
 
-* Defined the research focus on **review helpfulness and credibility** in online marketplaces
-* Selected the **Amazon Fine Food Reviews** dataset from Kaggle (SNAP dataset)
-* Examined dataset structure, features, and missing values
-* Analyzed key variables related to helpfulness and ratings
-
-Initial exploration showed that the dataset contains over **568,000 reviews**, with strong class imbalance in review scores. Most reviews are highly positive, with **5-star ratings dominating the distribution**, while lower ratings appear less frequently. Descriptive statistics revealed a strong positive bias in ratings (mean score = 4.18, median = 5), which is important to consider for later modeling and interpretation. 
+![Proportion Review Scores](images/ProportionReviewScores.png)
 
 ---
 
-## Week 3: Feature Construction & Sentiment Analysis
-
-The main objective of this week was to transform unstructured text into meaningful and interpretable features.
-
-* Inspected all columns for missing values and handled incomplete entries
-* Created a **helpfulness_ratio** feature using HelpfulnessNumerator and HelpfulnessDenominator
-* Addressed zero-denominator cases by assigning a ratio of 0 to preserve data
-* Added **review_length** to capture informational content
-* Filtered out reviews with fewer than 15 words to reduce noise
-
-Sentiment analysis was conducted using **TextBlob**, generating:
-
-* `sentiment_score` (continuous, −1 to 1)
-* `sentiment_label` (POSITIVE, NEGATIVE, NEUTRAL)
-
-This step enabled early incorporation of emotional tone into the analysis while maintaining a lightweight and interpretable pipeline. The sentiment distribution showed a heavy dominance of positive reviews, highlighting another form of imbalance in the dataset. 
+## Notebook: `CourseProjectReviews.ipynb`
 
 ---
 
-## Week 4: Text Preprocessing & Modeling Review Helpfulness
+## 1. Import & Load
 
-This week focused on preparing text data and modeling how review characteristics affect perceived helpfulness.
-
-* Converted all text to lowercase to ensure consistency
-* Removed punctuation, numbers, and non-alphabetic characters to reduce noise
-* Expanded the stopword list and applied **Porter stemming** to normalize vocabulary
-* Created a `clean_text` column for modeling
-
-To address the question *“Does review length increase perceived credibility and helpfulness?”*:
-
-* A correlation analysis showed a weak positive relationship (r = 0.123)
-* Linear Regression estimated a small but positive effect of review length
-* Random Forest Regressor captured non-linear patterns but still explained limited variance (R² ≈ 0.023)
-
-Feature importance analysis showed that **review length accounted for ~96.7% of predictive power**, while sentiment contributed a smaller share. This suggests that informational content matters more than emotional tone for helpfulness. 
+* Loaded the review dataset using `pandas`
+* Verified dataset structure, column names, and data types
+* Filtered invalid or incomplete helpfulness entries
 
 ---
 
-## Week 5: Diagnostics, Robustness & Expressiveness Analysis
+## 2. Initial Exploration
 
-The final week focused on diagnostics, robustness checks, and answering the third research question:
-**“Are emotionally expressive reviews or informational reviews more helpful to consumers?”**
+* Examined sample reviews and associated helpfulness votes
+* Analyzed distribution of review length
+* Inspected sentiment polarity and subjectivity distributions
 
-* Computed **subjectivity scores** using TextBlob to measure emotional expressiveness
-* Classified reviews as:
-  * **INFORMATIONAL** (subjectivity < 0.5)
-  * **EMOTIONAL** (subjectivity ≥ 0.5)
-* Compared average helpfulness ratios across expressiveness types
+This step ensured the dataset was suitable for textual and statistical analysis.
 
-Results showed that **informational reviews have higher average helpfulness ratios (0.424) than emotional reviews (0.399)**. A Welch’s two-sample t-test confirmed this difference is **statistically significant** (p ≪ 0.05).
+---
 
-Robustness checks included:
+## 3. Text Preprocessing
 
-* Redefining helpfulness as a binary outcome
-* Varying subjectivity thresholds (0.4, 0.5, 0.6)
+Steps applied to the review text:
 
-Across all tests, the conclusion remained stable: **informational reviews are consistently perceived as more helpful than emotionally expressive ones**, supporting the robustness and validity of the findings. 
+* Converted text to lowercase
+* Removed punctuation and special characters
+* Tokenized reviews
+* Computed word counts to measure **review length**
 
+Preprocessing ensured consistency and reliable feature extraction.
+
+---
+
+## 4. Feature Engineering
+
+Constructed key analytical variables:
+
+* **Helpfulness ratio** = helpful votes / total votes
+* **Review length** (word count)
+* **Sentiment polarity** (TextBlob; –1 to +1)
+* **Subjectivity score** to distinguish emotional vs informational reviews
+
+Reviews were categorized based on sentiment polarity and subjectivity thresholds.
+
+---
+
+## 5. Research Question 1: Emotional vs. Informational Reviews
+
+To examine whether emotionally expressive reviews are more helpful than informational ones:
+
+* Reviews were classified using **subjectivity scores**
+* Mean helpfulness ratios were compared using **z-tests**
+* Analyses were repeated on high-vote subsets for robustness
+
+![Expressiveness Type](images/ExpressivenessType.png)
+
+---
+
+## 6. Research Question 2: Review Length and Helpfulness
+
+To assess whether longer reviews are perceived as more credible and helpful:
+
+* **Linear regression** was used with helpfulness ratio as the dependent variable
+* Review length served as the primary predictor
+* Results showed a positive association between length and helpfulness
+
+---
+
+## 7. Research Question 3: Positive vs. Negative Reviews
+
+To determine whether negative reviews are more helpful than positive ones:
+
+* Sentiment polarity scores were categorized into positive and negative
+* Mean helpfulness ratios were compared using **two-sample z-tests**
+* Neutral reviews were excluded to sharpen contrast
+
+![Review Sentiment](images/ReviewSentiment.png)
+
+---
+
+## 8. Statistical Summary
+
+Methods used:
+
+* Descriptive statistics
+* Two-sample **z-tests**
+* **Linear regression**
+* Visual inspection through bar charts and scatter plots
+
+These methods provided complementary statistical and visual evidence.
+
+---
+
+## Scope
+
+* Focuses on **perceived helpfulness**, not actual purchase behavior
+* Examines textual features of reviews, not reviewer demographics
+* Limited to one review platform and product context
+* Intended for exploratory and educational analysis
+
+---
+
+## Limitations
+
+* Observational data prevents causal inference
+* Automated sentiment analysis may miss nuance, sarcasm, or context
+* Helpfulness votes may be influenced by visibility or timing effects
+* Classifications depend on threshold choices for sentiment and subjectivity
+
+---
+
+## Conclusion
+
+This project demonstrates that **how reviews are written matters**. Emotionally expressive reviews, longer reviews, and negative reviews tend to be perceived as more helpful by consumers. These findings highlight the importance of emotional tone and informational depth in shaping consumer judgment and trust in online review platforms.
