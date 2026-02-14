@@ -66,6 +66,21 @@ Raw review dataset
 
 ---
 
+## Key Findings
+
+**All findings are based on z-tests and linear regression analyses.**
+
+1. **Are emotionally expressive reviews or informational reviews more helpful to consumers?**
+   Emotionally expressive reviews were found to be **more helpful on average** than informational reviews, particularly among reviews with a sufficient number of helpfulness votes. This suggests that emotional tone increases perceived usefulness.
+
+2. **Does review length increase perceived credibility and helpfulness?**
+   Yes. Linear regression results show a **positive and statistically significant relationship** between review length and helpfulness, indicating that longer reviews tend to be perceived as more credible and informative.
+
+3. **Are negative reviews perceived as more helpful than positive reviews?**
+   Yes. Negative reviews received **higher average helpfulness ratios** than positive reviews, suggesting that consumers find critical information more diagnostic and useful.
+
+---
+
 ## Review Helpfulness Overview
 
 The dataset contains consumer reviews with varying lengths, emotional tones, and sentiment polarities. Helpfulness is measured using a **helpfulness ratio**, capturing how useful a review is perceived by other users.
