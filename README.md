@@ -4,6 +4,8 @@ Even though online reviews are not equally helpful, they play important role whe
 
 Using the **Amazon Fine Food Reviews dataset**, we perform sentiment analysis and investigate linguistic and stylistic features that affect how much value other users assign to a review.
 
+GitHub Pages: https://mirfayzirgashevv.github.io/SOSC314_CourseProject/
+
 ## 🎯 Research Objectives
 
 In addition to **sentiment analysis (positive vs. negative)**, this project addresses the following questions:
